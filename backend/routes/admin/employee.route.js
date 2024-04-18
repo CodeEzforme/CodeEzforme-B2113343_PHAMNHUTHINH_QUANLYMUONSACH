@@ -1,10 +1,10 @@
-const express = require('express');
-const router = express.Router();
+    const express = require('express');
+    const router = express.Router();
 
-const controller = require('../../controllers/admin/employee.controller');
+    const controller = require('../../controllers/admin/employee.controller');
 
-router.get('/infor', controller.getInfor);
-router.get('/getReaders', controller.getReaders);
-router.put('/statusBook/:readerId/:bookId', controller.statusBook)
+    router.get('/infor', controller.getInfor);
+    router.get('/getReaders', controller.getReaders);
+    router.put('/statusBook/:readerId/:bookId', controller.statusBook)
 
-module.exports = router;
+    module.exports = router;
