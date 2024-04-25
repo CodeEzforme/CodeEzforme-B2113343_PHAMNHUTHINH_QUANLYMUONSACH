@@ -1,13 +1,9 @@
 <template>
-  <div>
-  <div class="container d-flex justify-content-between">
-    <div>Bạn cần hỗ trợ: <b class="text-danger">02871086979</b></div>
-    <div> Hệ thống cửa hàngLiên hệ hỗ trợ (07:30 - 17:00)</div>
-  </div>
-  <nav class="navbar navbar-expand">
+
+  <nav class="navbar navbar-expand navbar-dark bg-dark">
     <div class="navbar-brand-container">
       <a href="/books" class="navbar-brand">
-        <img src="/client/SpringBook.png" alt="" />
+          BOOK
       </a>
       <div class="mr-auto navbar-nav">
         <li class="nav-item">
@@ -16,22 +12,16 @@
             <i class="fa-solid fa-book"></i>
           </router-link>
         </li>
-        <li class="nav-item" style="width: 180px">
-          <router-link :to="{ name: 'borrow-client' }" class="nav-link">
-            
-            <h5><b>Đơn Mượn</b></h5>
-            <i class="fa-solid fa-basket-shopping"></i>
+        <li class="nav-item">
+          <router-link :to="{ name: 'borrow-list' }" class="nav-link">
+            <h5><b>Phiếu mượn</b></h5>
+            <i class="fa-solid fa-book"></i>
           </router-link>
         </li>
       </div>
     </div>
     <div class="login-logout-register-container">
       <div v-if="isLoggedIn">
-        <button class="btn btn-primary">
-          <router-link :to="{ name: 'infor-client' }" class="nav-link" style="margin:0;">
-            Thông tin cá nhân
-          </router-link>
-        </button>
         <button class="btn btn-danger button-logout" @click="logout">
           Đăng Xuất
         </button>
@@ -46,7 +36,6 @@
       </div>
     </div>
   </nav>
-</div>
 </template>
 
 <script>
@@ -108,10 +97,6 @@ export default {
 </script>
 
 <style scoped>
-.navbar {
-  background-color: #c6f0a1;
-  height: 80px;
-}
 .navbar-brand-container {
   display: flex;
   align-items: center;

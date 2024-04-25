@@ -90,7 +90,6 @@ export default {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: url("/admin/background_register.png");
   background-size: cover;
 }
 

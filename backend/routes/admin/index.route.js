@@ -1,9 +1,10 @@
-const configSystem = require("../../config/system") 
+const configSystem = require("../../config/system")
 
 const bookRouter = require('./book.route');
 const authRouter = require('./auth.route');
 const employeeRouter = require('./employee.route');
 const authMiddleware = require("../../middlewares/admin/auth.middleware");
+const borrowBookRouter = require('../client/borrowbook.route');
 
 module.exports = (app) => {
   const ADMIN_PATH = '/' + configSystem.adminPrefix;
@@ -15,13 +16,17 @@ module.exports = (app) => {
   );
 
   app.use(
-    ADMIN_PATH + "/auth", 
+    ADMIN_PATH + "/auth",
     authRouter
   );
 
   app.use(
-    ADMIN_PATH + "/employee", 
-    authMiddleware.authRequire,
+    ADMIN_PATH + "/borrow-book",
+    borrowBookRouter
+  );
+
+  app.use(
+    ADMIN_PATH + "/employee",
     employeeRouter
   );
 

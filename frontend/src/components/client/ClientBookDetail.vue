@@ -3,7 +3,7 @@
     <hr />
     <div class="p-1">
       <strong>Tên sách:</strong>
-      {{ book.bookTitle }}
+      {{ book.name }}
     </div>
     <div class="p-1">
       <strong>Giá: </strong>
@@ -15,7 +15,7 @@
     </div>
     <div class="p-1">
       <strong>Số lượng sách còn lại: </strong>
-      {{ remainingBooks}}
+      {{ remainingBooks }}
     </div>
     <div class="p-1">
       <strong>Tác giả:</strong>
@@ -24,7 +24,7 @@
     <hr />
     <div class="p-1">
       <strong>Tên nhà xuất bản:</strong>
-      {{ book.publisherName }}
+      {{ book.publisher }}
     </div>
     <div class="p-1">
       <strong>Năm xuất bản:</strong>
@@ -34,51 +34,7 @@
       <strong>Địa chỉ NXB:</strong>
       {{ book.publisherAddress }}
     </div>
-    <hr />
-    <h4>Đăng ký mượn sách</h4>
-    <div class="form">
-      <form
-        @submit.prevent="add"
-        action=""
-        enctype="multipart/form-data"
-        method="post"
-      >
-        <div class="form-item mb-3">
-          <label class="label" for="quantity">Số lượng:</label><br />
-          <input
-            class="input"
-            type="number"
-            id="quantity"
-            min="1"
-            max="3"
-            required
-            v-model="formData.quantity"
-          />
-        </div>
-        <div class="form-item mb-3">
-          <label class="label" for="borrowDate">Ngày mượn:</label><br />
-          <input
-            class="input"
-            type="date"
-            id="borrowDate"
-            required
-            v-model="formData.borrowDate"
-          />
-        </div>
-        <div class="form-item mb-3">
-          <label class="label" for="returnDate">Ngày trả:</label><br />
-          <input
-            class="input"
-            type="date"
-            id="returnDate"
-            required
-            v-model="formData.returnDate"
-          />
-        </div>
 
-        <button type="submit" class="btn btn-primary mb-3">Đăng ký mượn</button>
-      </form>
-    </div>
   </div>
 </template>
 
@@ -95,52 +51,17 @@ export default {
     return {
       formData: {
         quantity: 1,
-        borrowDate:"",
-        returnDate:"",
+        borrowDate: "",
+        returnDate: "",
         book_id: this.book._id,
       },
       remainingBooks: 0,
     };
   },
-  watch: {
-    // Giám sát sự thay đổi của prop 'book'
-    book: {
-      handler() {
-        // Gọi phương thức updateRemainingBooks() mỗi khi prop 'book' thay đổi
-        this.updateRemainingBooks();
-      },
-      deep: true, // Giám sát sâu vào các thuộc tính của 'book'
-    },
-  },
   methods: {
-    async add() {
+    async remainingbooks() {
       try {
-        const formData = new FormData();
-        formData.append("quantity", this.formData.quantity);
-        formData.append("book_id", this.formData.book_id);
-        formData.append("borrowDate", this.formData.borrowDate);
-        formData.append("returnDate", this.formData.returnDate);
-        console.log(this.formData)
-        const response = await ReaderService.addBook(this.formData);
-        toast.success("Added successfully!", {
-          autoClose: 1200,
-        });
-
-        setTimeout(() => {
-          this.$router.push({ name: "borrow-client" });
-        }, 800);
-      } catch (error) {
-        console.log(error);
-        const errorMessage = error.response?.data?.error || "Số lượng sách không đủ để mượn!";
-        toast.error(errorMessage, { autoClose: 3000 });
-        setTimeout(() => {
-          this.$router.push({ name: "borrow-client" });
-        }, 800);
-      }
-    },
-    async updateRemainingBooks(){
-      try {
-        const response = await ReaderService.getNumberBookBorrowed(this.book._id);
+        const response = await ReaderService.getNumberBorrowed(this.book._id);
         this.remainingBooks = this.book.quantity - response;
       } catch (error) {
         console.log(error);
@@ -149,8 +70,16 @@ export default {
       }
     },
   },
+  watch: {
+    book: {
+      handler() {
+        this.remainingbooks();
+      },
+      deep: true,
+    },
+  },
   mounted() {
-    this.updateRemainingBooks();
+    this.remainingbooks();
   },
 };
 </script>

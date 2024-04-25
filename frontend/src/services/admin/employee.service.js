@@ -5,30 +5,22 @@ class EmployeeService {
         this.api = createApiAdmin(baseUrl);
     }
 
-    async getInfor() {
-        return (await this.api.get("/infor")).data;
-    }
-
-    
-    async retrieveAllReaders() {
-        try {
-            return (await this.api.get("/retrieveallreaders")).data;
-        } catch (error) {
-            throw error;
-        }
-    }
-    async changeStatus(readerId, bookId, status) {
+    async statusBook(readerId, bookId, status) {
         try {
             // Gọi đến ReaderService để thay đổi trạng thái của sách
-            const response = await this.api.post(`/changestatus/${readerId}/${bookId}`, { status });
-
-            // Trả về dữ liệu phản hồi từ server
+            const response = await this.api.put(`/statusBook/${readerId}/${bookId}`, { status });
             return response.data;
         } catch (error) {
             throw error;
         }
     }
 
-
+    async getReaders() {
+        try {
+            return (await this.api.get("/getReaders")).data;
+        } catch (error) {
+            throw error;
+        }
+    }
 }
 export default new EmployeeService();

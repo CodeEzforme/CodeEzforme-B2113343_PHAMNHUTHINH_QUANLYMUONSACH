@@ -77,36 +77,19 @@
             />
           </div>
 
-          <div class="form-item">
-            <label class="label" for="thumbnail">Ảnh sách</label><br />
-            <input
-              class="input"
-              type="file"
-              id="thumbnail"
-              accept="image/*"
-              @change="handleFileUpload"
-            />
-            <div v-if="formData.thumbnail">
-              {{ getFileName(formData.thumbnail) }}
-              <div v-if="imageChanged">{{ info }}</div>
-            </div>
-          </div>
 
           <button type="submit" class="btn btn-primary">Update</button>
         </form>
       </div>
     </div>
-    <AppFooter />
   </div>
 </template>
 
 <script>
 import BookService from "@/services/admin/book.service";
-import AppFooter from "@/components/admin/AppFooter.vue";
 
 export default {
   components: {
-    AppFooter,
   },
   data() {
     return {
@@ -119,7 +102,6 @@ export default {
         quantity: 0,
         publishYear: "",
         author: "",
-        thumbnail: null,
       },
     };
   },
@@ -139,7 +121,6 @@ export default {
           this.formData.publishYear = book.publishYear;
           this.formData.publisherName = book.publisherName;
           this.formData.publisherAddress = book.publisherAddress;
-          this.formData.thumbnail = book.thumbnail;
         } else {
           console.log("Book not found");
         }
@@ -150,16 +131,6 @@ export default {
       }
     },
 
-    getFileName(file) {
-      // Extract and return only the file name
-      return file instanceof File ? file.name : file;
-    },
-
-    handleFileUpload(event) {
-      const file = event.target.files[0];
-      this.formData.thumbnail = file;
-      this.imageChanged = true;
-    },
 
     async updateBook() {
       try {
@@ -183,7 +154,6 @@ export default {
         formData.append("publisherName", this.formData.publisherName);
         formData.append("publisherAddress", this.formData.publisherAddress);
         formData.append("author", this.formData.author);
-        formData.append("thumbnail", this.formData.thumbnail);
         const response = await BookService.update(
           this.$route.params.id,
           this.formData

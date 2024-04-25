@@ -1,4 +1,4 @@
-const Reader = require('../../models/reader.model');
+const Reader = require('../../models/DOCGIA.model');
 
 module.exports.authRequire = async (req, res, next) => {
   if (!req.cookies.tokenUser) {

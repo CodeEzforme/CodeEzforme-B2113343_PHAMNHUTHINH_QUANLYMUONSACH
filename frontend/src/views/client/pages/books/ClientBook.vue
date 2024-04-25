@@ -3,11 +3,6 @@
     <ClientAppHeader />
     <div class="container mt-3">
       <div class="page row">
-        <img
-          src="/client/bannerhome.png"
-          alt=""
-          class="mb-3"
-        />
         <div class="col-md-10">
           <ClientInputSearch v-model="searchText" />
         </div>
@@ -24,7 +19,7 @@
           <ClientBookList
             v-if="filteredBooksCount > 0"
             :books="filteredBooks"
-            v-model:activeIndex="activeIndex"
+            v-model:activeIndex='activeIndex'
           />
           <p v-else>Không có liên hệ nào.</p>
         </div>
@@ -37,22 +32,15 @@
             </h4>
             <ClientBookDetail :book="activeBook" />
           </div>
-          <div v-else>
-            <h4>Thông tin đặc biệt</h4>
-            <img src="/client/sider.png" style="width:100%;" alt="">
-            <img src="/client/sider2.png" style="width:100%;" alt="">
-          </div>
         </div>
       </div>
     </div>
-    <ClientAppFooter/>
   </div>
 </template>
 
 <script>
 import ClientBookDetail from "@/components/client/ClientBookDetail.vue";
 import ClientAppHeader from "@/components/client/ClientAppHeader.vue";
-import ClientAppFooter from "@/components/client/ClientAppFooter.vue";
 import ClientInputSearch from "@/components/client/ClientInputSearch.vue";
 import ClientBookList from "@/components/client/ClientBookList.vue";
 import BookService from "@/services/client/book.service";
@@ -63,7 +51,6 @@ export default {
     ClientInputSearch,
     ClientBookList,
     ClientAppHeader,
-    ClientAppFooter,
   },
   // Đoạn mã xử lý đầy đủ sẽ trình bày bên dưới
   data() {

@@ -8,6 +8,7 @@
           @submit.prevent="add"
           action=""
           enctype="multipart/form-data"
+          accept="image/*"
           method="post"
         >
           <div class="form-item">
@@ -83,34 +84,41 @@
           </div>
 
           <div class="form-item">
-            <label class="label" for="thumbnail">Ảnh sách:</label><br />
-            <input
-              class="input"
-              type="file"
-              id="thumbnail"
-              accept="image/*"
-              @change="handleFileUpload"
-            />
+              <label class="label" for="thumbnail">Ảnh:</label><br />
+              <div class="d-flex justify-center align-items-center flex-column">
+                <input
+                    class="form-control"
+                    style="font-size: 1.6rem; padding: .75rem"
+                    size="80"
+                    type="file"
+                    id="fileInput"
+                    name='thumbnail'
+                    upload-image
+                    @change="handleImageUpload($event)"
+                  />
+                  <div class='image-preview-wrap'>
+                    <img
+                      :src="imagePreview"
+                      class='image-preview'
+                      upload-image-preview
+                    >
+                  </div>
+              </div>
           </div>
-
-          <button type="submit" class="btn btn-primary">Tạo</button>
+            <button type="submit" class="btn btn-primary">Tạo</button>
         </form>
       </div>
     </div>
-    <AppFooter />
   </div>
 </template>
 
 <script>
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
-import AppFooter from "@/components/admin/AppFooter.vue";
 import BookService from "@/services/admin/book.service";
 
 export default {
-  components: {
-    AppFooter,
-  },
+
   data() {
     return {
       formData: {
@@ -120,7 +128,7 @@ export default {
         quantity: 0,
         publishYear: "",
         author: "",
-        thumbnail: null,
+        thumbnail: "",
       },
     };
   },
@@ -128,25 +136,33 @@ export default {
   computed: {},
 
   methods: {
-    handleFileUpload(event) {
-      const file = event.target.files[0];
-      this.formData.thumbnail = file;
+    handleImageUpload($event) {
+      const file = $event.target.files[0];
+      if (file) {
+        this.formData.thumbnail = file;
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          this.imagePreview = reader.result;
+        }
+        reader.readAsDataURL(file);
+      }
     },
 
-    async add() {
+    async add($event) {
+      $event.preventDefault();
+
       try {
         if (
           !this.formData.bookTitle ||
           !this.formData.price ||
           !this.formData.quantity ||
-          !this.formData.author 
+          !this.formData.author
         ) {
           toast.error("Please fill in all required fields.", {
             autoClose: 3000,
           });
           return;
         }
-
         const formData = new FormData();
         formData.append("bookTitle", this.formData.bookTitle);
         formData.append("price", this.formData.price);
@@ -178,8 +194,8 @@ export default {
 <style scoped>
 .container {
   width: 80%;
-  width: 500px;
-  height: 850px;
+  width: 600px;
+  height: 1050px;
   text-align: center;
   padding: 20px;
   background-color: #f5f5f5;
@@ -208,5 +224,15 @@ export default {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
+}
+
+.image-preview {
+  padding: 20px;
+  width: 11rem;
+  height: auto;
+  object-fit: cover;
+}
+.image-preview[src=""] {
+  display: none;
 }
 </style>

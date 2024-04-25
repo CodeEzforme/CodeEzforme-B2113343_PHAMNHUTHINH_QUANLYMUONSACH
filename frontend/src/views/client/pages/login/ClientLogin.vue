@@ -32,20 +32,18 @@
         </form>
       </div>
     </div>
-    <ClientAppFooter />
+
   </div>
 </template>
   
   <script>
 import AuthorizationServiceClient from "../../../../services/client/authorization.service";
 import ClientAppHeader from "@/components/client/ClientAppHeader.vue";
-import ClientAppFooter from "@/components/client/ClientAppFooter.vue";
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
 export default {
   components: {
     ClientAppHeader,
-    ClientAppFooter,
   },
   data() {
     return {

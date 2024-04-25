@@ -33,37 +33,21 @@ const adminRoutes = [
   },
 
   {
-    path: "/admin/books/borrow",
-    name: "book.borrow",
-    component: () => import("@/views/admin/pages/books/Borrow.vue"),
-    beforeEnter: requireAdminAuth,
-  },
-
-  {
-    path: "/admin/employee/infor",
-    name: "employee.infor",
-    component: () => import("@/views/admin/pages/infor/Infor.vue"),
-    beforeEnter: requireAdminAuth,
-  },
-//   {
-//     path: "/admin/*", // Sửa lại định tuyến này để bắt đầu bằng "/"
-//     name: "notfound",
-//     component: () => import("@/views/admin/pages/books/NotFound.vue"),
-//   },
-  // {
-  //   path: "/:catchAll(.*)", // Bắt tất cả các đường dẫn không hợp lệ
-  //   name: "notfound",
-  //   component: () => import("@/views/admin/pages/books/NotFound.vue"),
-  // },
-  {
     path: "/admin/auth/register",
     name: "register",
     component: () => import("@/views/admin/pages/register/Register.vue"),
   },
+
   {
     path: "/admin/auth/login",
     name: "login",
     component: () => import("@/views/admin/pages/login/Login.vue"),
+  },
+
+  {
+    path: "/admin/Bill",
+    name: "bill",
+    component: () => import("@/views/admin/pages/books/Bill.vue"),
   },
 ];
 
